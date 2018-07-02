@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let log = OSLog(subsystem: "fkymy.nyanpasu", category: "Environment")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        #if DEBUG
+            os_log("DEBUG Build", log: log, type: .default)
+        #endif
+
         return true
     }
 

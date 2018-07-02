@@ -12,11 +12,12 @@
 		C581401775CF0C382ED5B432 /* Pods_NyanpasuTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F32950F2B456FF40C475AC /* Pods_NyanpasuTests.framework */; };
 		D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */; };
 		D942AEC720E8FBE5009CCA5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942AEC520E8FBE5009CCA5D /* Main.storyboard */; };
-		D942AEC920E8FBE5009CCA5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D942AEC820E8FBE5009CCA5D /* Assets.xcassets */; };
 		D942AECC20E8FBE5009CCA5D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942AECA20E8FBE5009CCA5D /* LaunchScreen.storyboard */; };
 		D942AED720E8FBE5009CCA5D /* NyanpasuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D942AED620E8FBE5009CCA5D /* NyanpasuTests.swift */; };
 		D942AEE220E8FBE6009CCA5D /* NyanpasuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D942AEE120E8FBE6009CCA5D /* NyanpasuUITests.swift */; };
 		D942AEF220E9C7AA009CCA5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */; };
+		D9AEFAF920E9F741007A528E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFAF820E9F741007A528E /* Logger.swift */; };
+		D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9AEFB2820EA06CA007A528E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +50,6 @@
 		D942AEBE20E8FBE5009CCA5D /* Nyanpasu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nyanpasu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D942AEC620E8FBE5009CCA5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D942AEC820E8FBE5009CCA5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D942AECB20E8FBE5009CCA5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D942AECD20E8FBE5009CCA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D942AED220E8FBE5009CCA5D /* NyanpasuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NyanpasuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +59,9 @@
 		D942AEE120E8FBE6009CCA5D /* NyanpasuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NyanpasuUITests.swift; sourceTree = "<group>"; };
 		D942AEE320E8FBE6009CCA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9AEFAF820E9F741007A528E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		D9AEFAFB20E9F9C4007A528E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D9AEFB2820EA06CA007A528E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,11 +141,13 @@
 			isa = PBXGroup;
 			children = (
 				D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */,
+				D9AEFAFB20E9F9C4007A528E /* README.md */,
 				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
-				D942AEC820E8FBE5009CCA5D /* Assets.xcassets */,
 				D942AECA20E8FBE5009CCA5D /* LaunchScreen.storyboard */,
 				D942AECD20E8FBE5009CCA5D /* Info.plist */,
 				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
+				D9AEFAF820E9F741007A528E /* Logger.swift */,
+				D9AEFB2820EA06CA007A528E /* Assets.xcassets */,
 			);
 			path = Nyanpasu;
 			sourceTree = "<group>";
@@ -275,8 +280,8 @@
 			files = (
 				D942AECC20E8FBE5009CCA5D /* LaunchScreen.storyboard in Resources */,
 				D942AEF220E9C7AA009CCA5D /* GoogleService-Info.plist in Resources */,
-				D942AEC920E8FBE5009CCA5D /* Assets.xcassets in Resources */,
 				D942AEC720E8FBE5009CCA5D /* Main.storyboard in Resources */,
+				D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */,
+				D9AEFAF920E9F741007A528E /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
