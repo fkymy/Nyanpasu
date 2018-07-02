@@ -9,22 +9,22 @@
 import UIKit
 
 extension MainViewController: StoryboardInstance {
-    static var storyboardName: String {
-        return "Main"
-    }
+  static var storyboardName: String {
+    return "Main"
+  }
 }
 
 class MainViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    @IBAction func logout(_ sender: UIButton) {
-        // clear user session (example only, not for production)
-        UserDefaults.standard.set(false, forKey: "LOGGED_IN")
-        
-        // navigate to Auth
-        AppDelegate.shared.rootViewController.toLogoutScreen()
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  @IBAction func logout(_ sender: UIButton) {
+    // clear user session (example only, not for production)
+    UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+    
+    // navigate to Auth
+    AppDelegate.shared.rootViewController.toLogoutScreen()
+  }
 }

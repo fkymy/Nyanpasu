@@ -9,33 +9,33 @@
 import UIKit
 
 class SplashViewController: UIViewController {
+  
+  private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = UIColor.red
-        view.addSubview(activityIndicator)
-        activityIndicator.frame = view.bounds
-        activityIndicator.backgroundColor = UIColor(white: 0, alpha: 0.4)
-        
-        makeServiceCall()
-    }
+    view.backgroundColor = UIColor.red
+    view.addSubview(activityIndicator)
+    activityIndicator.frame = view.bounds
+    activityIndicator.backgroundColor = UIColor(white: 0, alpha: 0.4)
     
-    private func makeServiceCall() {
-        activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
-            self.activityIndicator.stopAnimating()
-            
-            if UserDefaults.standard.bool(forKey: "LOGGED_IN") {
-                // navigate to Main
-                AppDelegate.shared.rootViewController.toMainScreen()
-            }
-            else {
-                // navigate to Auth
-                AppDelegate.shared.rootViewController.toLoginScreen()
-            }
-        }
+    makeServiceCall()
+  }
+  
+  private func makeServiceCall() {
+    activityIndicator.startAnimating()
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+      self.activityIndicator.stopAnimating()
+      
+      if UserDefaults.standard.bool(forKey: "LOGGED_IN") {
+        // navigate to Main
+        AppDelegate.shared.rootViewController.toMainScreen()
+      }
+      else {
+        // navigate to Auth
+        AppDelegate.shared.rootViewController.toLoginScreen()
+      }
     }
+  }
 }

@@ -13,6 +13,6 @@ import os.log
 public let logger = Logger()
 
 public struct Logger {
-//    private static let log = OSLog(subsystem: "fkymy.nyanpasu", category: "default")
-    
+  //    private static let log = OSLog(subsystem: "fkymy.nyanpasu", category: "default")
+  
 }

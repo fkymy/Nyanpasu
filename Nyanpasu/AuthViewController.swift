@@ -7,25 +7,26 @@
 //
 
 import UIKit
+import Firebase
 
 extension AuthViewController: StoryboardInstance {
-    static var storyboardName: String {
-        return "Auth"
-    }
+  static var storyboardName: String {
+    return "Auth"
+  }
 }
 
 class AuthViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
-    @IBAction func login(_ sender: UIButton) {
-        // store the user session (example only, not for the production)
-        UserDefaults.standard.set(true, forKey: "LOGGED_IN")
-        
-        // navigate to Main
-        AppDelegate.shared.rootViewController.toMainScreen()
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+  }
+  
+  @IBAction func login(_ sender: UIButton) {
+    // store the user session (example only, not for the production)
+    UserDefaults.standard.set(true, forKey: "LOGGED_IN")
+    
+    // navigate to Main
+    AppDelegate.shared.rootViewController.toMainScreen()
+  }
 }
