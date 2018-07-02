@@ -6,6 +6,7 @@ target 'Nyanpasu' do
   use_frameworks!
 
   # Pods for Nyanpasu
+pod 'Firebase/Core'
 
   target 'NyanpasuTests' do
     inherit! :search_paths
