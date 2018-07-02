@@ -18,6 +18,12 @@
 		D942AEF220E9C7AA009CCA5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */; };
 		D9AEFAF920E9F741007A528E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFAF820E9F741007A528E /* Logger.swift */; };
 		D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9AEFB2820EA06CA007A528E /* Assets.xcassets */; };
+		D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB2A20EA1BA9007A528E /* AppRootViewController.swift */; };
+		D9AEFB2D20EA1CAB007A528E /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */; };
+		D9AEFB2F20EA1CBA007A528E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */; };
+		D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3020EA1D2F007A528E /* SplashViewController.swift */; };
+		D9AEFB3320EA2C53007A528E /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9AEFB3220EA2C53007A528E /* Auth.storyboard */; };
+		D9AEFB3620EA334F007A528E /* StoryboardInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,12 @@
 		D9AEFAF820E9F741007A528E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		D9AEFAFB20E9F9C4007A528E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D9AEFB2820EA06CA007A528E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D9AEFB2A20EA1BA9007A528E /* AppRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
+		D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D9AEFB3020EA1D2F007A528E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		D9AEFB3220EA2C53007A528E /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
+		D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,14 +152,20 @@
 		D942AEC020E8FBE5009CCA5D /* Nyanpasu */ = {
 			isa = PBXGroup;
 			children = (
-				D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */,
-				D9AEFAFB20E9F9C4007A528E /* README.md */,
-				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
 				D942AECA20E8FBE5009CCA5D /* LaunchScreen.storyboard */,
-				D942AECD20E8FBE5009CCA5D /* Info.plist */,
-				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
+				D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */,
+				D9AEFB2A20EA1BA9007A528E /* AppRootViewController.swift */,
+				D9AEFB3020EA1D2F007A528E /* SplashViewController.swift */,
+				D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */,
+				D9AEFB3220EA2C53007A528E /* Auth.storyboard */,
+				D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */,
+				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
+				D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */,
 				D9AEFAF820E9F741007A528E /* Logger.swift */,
 				D9AEFB2820EA06CA007A528E /* Assets.xcassets */,
+				D942AECD20E8FBE5009CCA5D /* Info.plist */,
+				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
+				D9AEFAFB20E9F9C4007A528E /* README.md */,
 			);
 			path = Nyanpasu;
 			sourceTree = "<group>";
@@ -280,6 +298,7 @@
 			files = (
 				D942AECC20E8FBE5009CCA5D /* LaunchScreen.storyboard in Resources */,
 				D942AEF220E9C7AA009CCA5D /* GoogleService-Info.plist in Resources */,
+				D9AEFB3320EA2C53007A528E /* Auth.storyboard in Resources */,
 				D942AEC720E8FBE5009CCA5D /* Main.storyboard in Resources */,
 				D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */,
 			);
@@ -363,12 +382,16 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Nyanpasu/Pods-Nyanpasu-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,8 +406,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9AEFB2D20EA1CAB007A528E /* AuthViewController.swift in Sources */,
+				D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */,
 				D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */,
+				D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */,
+				D9AEFB3620EA334F007A528E /* StoryboardInstance.swift in Sources */,
 				D9AEFAF920E9F741007A528E /* Logger.swift in Sources */,
+				D9AEFB2F20EA1CBA007A528E /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

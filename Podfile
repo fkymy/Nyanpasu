@@ -7,6 +7,9 @@ target 'Nyanpasu' do
 
   # Pods for Nyanpasu
 pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
   target 'NyanpasuTests' do
     inherit! :search_paths

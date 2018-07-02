@@ -1,3 +1,3 @@
 ### Nyanpasu
 
-![<Screenshot>](nyanpasu.png)
+![Screenshot](Assets.xcassets/kuchi.imageset/nyanpasu-copy.png)
