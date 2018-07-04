@@ -8,22 +8,40 @@
 
 import UIKit
 
-protocol StoryboardInstance {
+protocol StoryboardInitialInstance {
   static var storyboardName: String { get }
   static var bundle: Bundle? { get }
 }
 
-extension StoryboardInstance where Self: UIViewController {
+extension StoryboardInitialInstance where Self: UIViewController {
   static var bundle: Bundle? {
     return nil
   }
   
-  static func storyboardInstance() -> UIViewController? {
+  static func storyboardInitialInstance() -> UIViewController? {
     let storyboard = UIStoryboard(name: storyboardName, bundle: bundle)
     return storyboard.instantiateInitialViewController()
   }
 }
 
-extension StoryboardInstance where Self: UIView {
+protocol StoryboardInstance {
+  static var storyboardName: String { get }
+  static var storyboardID: String { get }
+  static var bundle: Bundle? { get }
+}
+
+extension StoryboardInstance where Self: UIViewController {
+  static var storyboardID: String {
+    return String(describing: self)
+  }
   
+  static var bundle: Bundle? {
+    return nil
+  }
+  
+  static func fromStoryboard() -> Self {
+    let storyboard = UIStoryboard(name: storyboardName, bundle: bundle)
+    let controller = storyboard.instantiateViewController(withIdentifier: storyboardID) as! Self
+    return controller
+  }
 }

@@ -1,5 +1,5 @@
 //
-//  Room.swift
+//  Models.swift
 //  Nyanpasu
 //
 //  Created by Yuske Fukuyama on 2018/07/04.
@@ -8,10 +8,17 @@
 
 import Foundation
 
+struct User {
+  
+  let uid: String
+  let displayName: String?
+  let photoURL: URL?
+}
+
 struct Room {
+  
   let name: String
   let updated: String
-  
   var isUpdated: Bool
   
   static func all() -> [Room] {
@@ -22,4 +29,8 @@ struct Room {
       Room(name: "れんちょん", updated: "Updated July 3, 2018", isUpdated: false),
     ]
   }
+}
+
+struct Message {
+  
 }
