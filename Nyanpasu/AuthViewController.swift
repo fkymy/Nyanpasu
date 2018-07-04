@@ -9,10 +9,8 @@
 import UIKit
 import Firebase
 
-extension AuthViewController: StoryboardInstance {
-  static var storyboardName: String {
-    return "Auth"
-  }
+extension AuthViewController: StoryboardInitialInstance {
+  static var storyboardName: String { return "Auth" }
 }
 
 class AuthViewController: UIViewController {
@@ -21,6 +19,10 @@ class AuthViewController: UIViewController {
   private var handle: AuthStateDidChangeListenerHandle?
   private let bottomSpacing: CGFloat = 64
   
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+  
   // MARK: IBOutlets
   @IBOutlet weak var usernameField: UITextField!
   @IBOutlet weak var bottomLayoutGuideConstraint: NSLayoutConstraint!
@@ -28,6 +30,7 @@ class AuthViewController: UIViewController {
   // MARK: UIViewController Lifecycle
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    self.setNeedsStatusBarAppearanceUpdate()
     
     NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -83,7 +86,6 @@ extension AuthViewController {
     
     Auth.auth().signInAnonymously { (authResult, error) in
       if let error = error {
-        print("error in signInAnonymously")
         print(error.localizedDescription)
         return
       }

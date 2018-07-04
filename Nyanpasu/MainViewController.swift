@@ -9,10 +9,8 @@
 import UIKit
 import Firebase
 
-extension MainViewController: StoryboardInstance {
-  static var storyboardName: String {
-    return "Main"
-  }
+extension MainViewController: StoryboardInitialInstance {
+  static var storyboardName: String { return "Main" }
 }
 
 class MainViewController: UIViewController {
@@ -21,7 +19,7 @@ class MainViewController: UIViewController {
   var user: User! {
     didSet {
       userDisplayNameLabel.text = user.displayName ?? "Anonymous"
-      userLatestMessage.text = "今日はどんな感じ？"
+      userLatestMessage.text = "今日はどんな感じ？ やっぱキャンプいい..."
     }
   }
   private var userHandle: AuthStateDidChangeListenerHandle?
@@ -29,6 +27,10 @@ class MainViewController: UIViewController {
   private let rooms: [Room] = Room.all()
   
   private var studio: StudioViewController?
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
 
   // MARK: IBOutlets
   @IBOutlet weak var collectionView: UICollectionView!
@@ -38,7 +40,19 @@ class MainViewController: UIViewController {
   @IBOutlet weak var userLatestMessage: UILabel!
   
   // MARK: UIViewController Lifecycle
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    collectionView.dataSource = self
+    collectionView.delegate = self
+    collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.identifier)
+    
+    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(enterStudio(sender:))))
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.setNeedsStatusBarAppearanceUpdate()
     userHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
       if let user = user {
         self.user = User(uid: user.uid, displayName: user.displayName, photoURL: user.photoURL)
@@ -47,29 +61,22 @@ class MainViewController: UIViewController {
   }
   
   override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
     Auth.auth().removeStateDidChangeListener(userHandle!)
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.identifier)
-    
-    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(enterStudio)))
+  deinit {
+    Auth.auth().removeStateDidChangeListener(userHandle!)
   }
 }
 
 // MARK - User View
 extension MainViewController {
-  @objc func enterStudio() {
-    performSegue(withIdentifier: "enterStudio", sender: nil)
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let studioVC = segue.destination as? StudioViewController {
-      studioVC.user = user
+  @objc func enterStudio(sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      let controller = StudioViewController.fromStoryboard()
+      controller.user = user
+      self.navigationController?.pushViewController(controller, animated: true)
     }
   }
 }

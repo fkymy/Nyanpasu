@@ -20,8 +20,10 @@ extension AppDelegate {
 
 class AppRootViewController: UIViewController {
   
+  // MARK: Properties
   private var currentViewController: UIViewController
   
+  // MARK: Initializers
   init() {
     self.currentViewController = SplashViewController()
     super.init(nibName: nil, bundle: nil)
@@ -35,7 +37,7 @@ class AppRootViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // for testing auth
+    // for testing auth (not for production)
     UserDefaults.standard.set(false, forKey: "LOGGED_IN")
     
     addChildViewController(currentViewController)
@@ -45,13 +47,13 @@ class AppRootViewController: UIViewController {
   }
 }
 
-// MARK: - Navigation
+// MARK: - Navigations
 extension AppRootViewController {
   
   func toLoginScreen() {
     // let newViewController = UINavigationController(rootViewController: AuthViewController())
     
-    guard let newViewController = AuthViewController.storyboardInstance() else {
+    guard let newViewController = AuthViewController.storyboardInitialInstance() else {
       assertionFailure("No UIStoryboard with name: Auth")
       return
     }
@@ -70,7 +72,7 @@ extension AppRootViewController {
   
   func toMainScreen() {
     
-    guard let newViewController = MainViewController.storyboardInstance() else {
+    guard let newViewController = MainViewController.storyboardInitialInstance() else {
       assertionFailure("No UIStoryboard with name: Main")
       return
     }
@@ -81,7 +83,7 @@ extension AppRootViewController {
   }
   
   func toLogoutScreen() {
-    guard let newViewController = AuthViewController.storyboardInstance() else {
+    guard let newViewController = AuthViewController.storyboardInitialInstance() else {
       assertionFailure("No UIStoryboard with name: Auth")
       return
     }
@@ -90,6 +92,11 @@ extension AppRootViewController {
     // let newViewController = UINavigationController(rootViewController: authViewController)
     animateDismissTransition(to: newViewController)
   }
+  
+}
+
+// MARK: - Navigation Animations
+extension AppRootViewController {
   
   private func animateFadeTransition(to newViewController: UIViewController, completion: (() -> Void)? = nil) {
     currentViewController.willMove(toParentViewController: nil)

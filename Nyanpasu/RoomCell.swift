@@ -63,6 +63,7 @@ class RoomCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
+    // sd_cancelCurrentImageLoad()
   }
   
   override init(frame: CGRect) {
@@ -87,4 +88,7 @@ class RoomCell: UICollectionViewCell {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+//  func populate(room: Room) {
+//  }
 }
