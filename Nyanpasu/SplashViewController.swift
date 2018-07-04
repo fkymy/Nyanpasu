@@ -24,8 +24,11 @@ class SplashViewController: UIViewController {
   }
   
   private func makeServiceCall() {
+    // just for simulation
+    
     activityIndicator.startAnimating()
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(0)) {
+
       self.activityIndicator.stopAnimating()
       
       if UserDefaults.standard.bool(forKey: "LOGGED_IN") {

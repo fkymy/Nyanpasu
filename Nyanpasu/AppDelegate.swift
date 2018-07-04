@@ -23,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     FirebaseApp.configure()
     
+    let db = Firestore.firestore()
+    
+    // for testing auth
+    UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+
     return true
   }
   

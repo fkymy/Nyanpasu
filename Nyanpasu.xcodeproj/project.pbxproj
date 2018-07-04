@@ -24,6 +24,12 @@
 		D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3020EA1D2F007A528E /* SplashViewController.swift */; };
 		D9AEFB3320EA2C53007A528E /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9AEFB3220EA2C53007A528E /* Auth.storyboard */; };
 		D9AEFB3620EA334F007A528E /* StoryboardInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */; };
+		D9AEFB3920EC37A5007A528E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3820EC37A5007A528E /* User.swift */; };
+		D9AEFB3C20EC472A007A528E /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3B20EC472A007A528E /* Room.swift */; };
+		D9AEFB3E20EC47F4007A528E /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3D20EC47F4007A528E /* RoomCell.swift */; };
+		D9AEFB4020EC4870007A528E /* RoomsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */; };
+		D9AEFB4620EC51C6007A528E /* StudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4520EC51C6007A528E /* StudioViewController.swift */; };
+		D9AEFB4820EC64D5007A528E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4720EC64D5007A528E /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +80,12 @@
 		D9AEFB3020EA1D2F007A528E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		D9AEFB3220EA2C53007A528E /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstance.swift; sourceTree = "<group>"; };
+		D9AEFB3820EC37A5007A528E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D9AEFB3B20EC472A007A528E /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		D9AEFB3D20EC47F4007A528E /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
+		D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFlowLayout.swift; sourceTree = "<group>"; };
+		D9AEFB4520EC51C6007A528E /* StudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioViewController.swift; sourceTree = "<group>"; };
+		D9AEFB4720EC64D5007A528E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +164,7 @@
 		D942AEC020E8FBE5009CCA5D /* Nyanpasu */ = {
 			isa = PBXGroup;
 			children = (
+				D9AEFB3A20EC3840007A528E /* Models */,
 				D942AECA20E8FBE5009CCA5D /* LaunchScreen.storyboard */,
 				D942AEC120E8FBE5009CCA5D /* AppDelegate.swift */,
 				D9AEFB2A20EA1BA9007A528E /* AppRootViewController.swift */,
@@ -159,6 +172,9 @@
 				D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */,
 				D9AEFB3220EA2C53007A528E /* Auth.storyboard */,
 				D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */,
+				D9AEFB4520EC51C6007A528E /* StudioViewController.swift */,
+				D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */,
+				D9AEFB3D20EC47F4007A528E /* RoomCell.swift */,
 				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
 				D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */,
 				D9AEFAF820E9F741007A528E /* Logger.swift */,
@@ -186,6 +202,16 @@
 				D942AEE320E8FBE6009CCA5D /* Info.plist */,
 			);
 			path = NyanpasuUITests;
+			sourceTree = "<group>";
+		};
+		D9AEFB3A20EC3840007A528E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D9AEFB3820EC37A5007A528E /* User.swift */,
+				D9AEFB3B20EC472A007A528E /* Room.swift */,
+				D9AEFB4720EC64D5007A528E /* Message.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,15 +408,27 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Nyanpasu/Pods-Nyanpasu-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -406,12 +444,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9AEFB4020EC4870007A528E /* RoomsFlowLayout.swift in Sources */,
 				D9AEFB2D20EA1CAB007A528E /* AuthViewController.swift in Sources */,
 				D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */,
 				D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */,
+				D9AEFB4620EC51C6007A528E /* StudioViewController.swift in Sources */,
 				D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */,
+				D9AEFB3920EC37A5007A528E /* User.swift in Sources */,
+				D9AEFB3C20EC472A007A528E /* Room.swift in Sources */,
 				D9AEFB3620EA334F007A528E /* StoryboardInstance.swift in Sources */,
+				D9AEFB4820EC64D5007A528E /* Message.swift in Sources */,
 				D9AEFAF920E9F741007A528E /* Logger.swift in Sources */,
+				D9AEFB3E20EC47F4007A528E /* RoomCell.swift in Sources */,
 				D9AEFB2F20EA1CBA007A528E /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

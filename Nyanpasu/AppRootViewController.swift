@@ -35,6 +35,9 @@ class AppRootViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    // for testing auth
+    UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+    
     addChildViewController(currentViewController)
     currentViewController.view.frame = view.bounds
     view.addSubview(currentViewController.view)
