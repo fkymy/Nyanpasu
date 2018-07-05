@@ -72,11 +72,11 @@ extension StudioViewController: UICollectionViewDelegateFlowLayout {
   
 }
 
-class MessageCell: UICollectionViewCell {
-  
-  @IBOutlet weak var textLabel: UILabel!
-  
-  func populate(message: Message) {
-    textLabel.text = "hello"
-  }
-}
+//class MessageCell: UICollectionViewCell {
+//  
+//  @IBOutlet weak var textLabel: UILabel!
+//
+//  func populate(message: Message) {
+//    textLabel.text = "hello"
+//  }
+//}

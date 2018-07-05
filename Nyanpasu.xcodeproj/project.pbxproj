@@ -28,6 +28,8 @@
 		D9AEFB4020EC4870007A528E /* RoomsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */; };
 		D9AEFB4620EC51C6007A528E /* StudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4520EC51C6007A528E /* StudioViewController.swift */; };
 		D9AEFB4A20EC7861007A528E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4920EC7861007A528E /* Models.swift */; };
+		D9AEFB4E20ED0232007A528E /* AVKeynote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4D20ED0232007A528E /* AVKeynote.swift */; };
+		D9AEFB5020ED37D7007A528E /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFlowLayout.swift; sourceTree = "<group>"; };
 		D9AEFB4520EC51C6007A528E /* StudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioViewController.swift; sourceTree = "<group>"; };
 		D9AEFB4920EC7861007A528E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		D9AEFB4D20ED0232007A528E /* AVKeynote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVKeynote.swift; sourceTree = "<group>"; };
+		D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,7 @@
 				D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */,
 				D9AEFB3220EA2C53007A528E /* Auth.storyboard */,
 				D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */,
+				D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */,
 				D9AEFB4520EC51C6007A528E /* StudioViewController.swift */,
 				D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */,
 				D9AEFB3D20EC47F4007A528E /* RoomCell.swift */,
@@ -178,6 +183,7 @@
 				D942AECD20E8FBE5009CCA5D /* Info.plist */,
 				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
 				D9AEFAFB20E9F9C4007A528E /* README.md */,
+				D9AEFB4D20ED0232007A528E /* AVKeynote.swift */,
 			);
 			path = Nyanpasu;
 			sourceTree = "<group>";
@@ -432,9 +438,11 @@
 			files = (
 				D9AEFB4020EC4870007A528E /* RoomsFlowLayout.swift in Sources */,
 				D9AEFB2D20EA1CAB007A528E /* AuthViewController.swift in Sources */,
+				D9AEFB5020ED37D7007A528E /* RoomViewController.swift in Sources */,
 				D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */,
 				D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */,
 				D9AEFB4620EC51C6007A528E /* StudioViewController.swift in Sources */,
+				D9AEFB4E20ED0232007A528E /* AVKeynote.swift in Sources */,
 				D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */,
 				D9AEFB3620EA334F007A528E /* StoryboardInstance.swift in Sources */,
 				D9AEFAF920E9F741007A528E /* Logger.swift in Sources */,

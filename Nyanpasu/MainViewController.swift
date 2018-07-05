@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Speech
 
 extension MainViewController: StoryboardInitialInstance {
   static var storyboardName: String { return "Main" }
@@ -25,9 +26,7 @@ class MainViewController: UIViewController {
   private var userHandle: AuthStateDidChangeListenerHandle?
   
   private let rooms: [Room] = Room.all()
-  
-  private var studio: StudioViewController?
-  
+
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -43,21 +42,26 @@ class MainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    self.setNeedsStatusBarAppearanceUpdate()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.identifier)
     
-    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(enterStudio(sender:))))
+    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(enterRoom(sender:))))
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.setNeedsStatusBarAppearanceUpdate()
     userHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
       if let user = user {
         self.user = User(uid: user.uid, displayName: user.displayName, photoURL: user.photoURL)
       }
     }
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    authorizeSpeech()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -72,9 +76,9 @@ class MainViewController: UIViewController {
 
 // MARK - User View
 extension MainViewController {
-  @objc func enterStudio(sender: UITapGestureRecognizer) {
+  @objc func enterRoom(sender: UITapGestureRecognizer) {
     if sender.state == .ended {
-      let controller = StudioViewController.fromStoryboard()
+      let controller = RoomViewController.fromStoryboard()
       controller.user = user
       self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -120,5 +124,23 @@ extension UIColor {
   
   static var secondaryBackgroundColor: UIColor {
     return UIColor(red:0.13, green:0.15, blue:0.17, alpha:1.0)
+  }
+}
+
+// MARK: - Speech
+extension MainViewController {
+  func authorizeSpeech() {
+    SFSpeechRecognizer.requestAuthorization { [unowned self] (authStatus) in
+      switch authStatus {
+      case .authorized:
+        print("Speech Recognition Authorized")
+      case .denied:
+        print("Speech Recognition Denied")
+      case .restricted:
+        print("Speech Recognition not available")
+      case .notDetermined:
+        print("Not Determined")
+      }
+    }
   }
 }

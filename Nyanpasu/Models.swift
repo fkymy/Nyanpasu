@@ -32,5 +32,5 @@ struct Room {
 }
 
 struct Message {
-  
+  let text: String
 }
