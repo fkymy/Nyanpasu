@@ -33,12 +33,17 @@ class AppRootViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+
   // MARK: UIViewController Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
     // for testing auth (not for production)
     UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+    self.setNeedsStatusBarAppearanceUpdate()
     
     addChildViewController(currentViewController)
     currentViewController.view.frame = view.bounds

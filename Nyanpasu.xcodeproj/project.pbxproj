@@ -16,6 +16,8 @@
 		D942AED720E8FBE5009CCA5D /* NyanpasuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D942AED620E8FBE5009CCA5D /* NyanpasuTests.swift */; };
 		D942AEE220E8FBE6009CCA5D /* NyanpasuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D942AEE120E8FBE6009CCA5D /* NyanpasuUITests.swift */; };
 		D942AEF220E9C7AA009CCA5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */; };
+		D96E0CBC20EE2F240019BEC2 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96E0CBB20EE2F240019BEC2 /* MiniPlayerViewController.swift */; };
+		D96E0CBE20EE324A0019BEC2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96E0CBD20EE324A0019BEC2 /* BorderedButton.swift */; };
 		D9AEFAF920E9F741007A528E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFAF820E9F741007A528E /* Logger.swift */; };
 		D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9AEFB2820EA06CA007A528E /* Assets.xcassets */; };
 		D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB2A20EA1BA9007A528E /* AppRootViewController.swift */; };
@@ -71,6 +73,8 @@
 		D942AEE120E8FBE6009CCA5D /* NyanpasuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NyanpasuUITests.swift; sourceTree = "<group>"; };
 		D942AEE320E8FBE6009CCA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D96E0CBB20EE2F240019BEC2 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
+		D96E0CBD20EE324A0019BEC2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		D9AEFAF820E9F741007A528E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		D9AEFAFB20E9F9C4007A528E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D9AEFB2820EA06CA007A528E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 				D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */,
 				D9AEFB3220EA2C53007A528E /* Auth.storyboard */,
 				D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */,
+				D96E0CBB20EE2F240019BEC2 /* MiniPlayerViewController.swift */,
 				D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */,
 				D9AEFB4520EC51C6007A528E /* StudioViewController.swift */,
 				D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */,
@@ -179,6 +184,7 @@
 				D9AEFB4920EC7861007A528E /* Models.swift */,
 				D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */,
 				D9AEFAF820E9F741007A528E /* Logger.swift */,
+				D96E0CBD20EE324A0019BEC2 /* BorderedButton.swift */,
 				D9AEFB2820EA06CA007A528E /* Assets.xcassets */,
 				D942AECD20E8FBE5009CCA5D /* Info.plist */,
 				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
@@ -441,6 +447,7 @@
 				D9AEFB5020ED37D7007A528E /* RoomViewController.swift in Sources */,
 				D9AEFB2B20EA1BA9007A528E /* AppRootViewController.swift in Sources */,
 				D942AEC220E8FBE5009CCA5D /* AppDelegate.swift in Sources */,
+				D96E0CBE20EE324A0019BEC2 /* BorderedButton.swift in Sources */,
 				D9AEFB4620EC51C6007A528E /* StudioViewController.swift in Sources */,
 				D9AEFB4E20ED0232007A528E /* AVKeynote.swift in Sources */,
 				D9AEFB3120EA1D2F007A528E /* SplashViewController.swift in Sources */,
@@ -448,6 +455,7 @@
 				D9AEFAF920E9F741007A528E /* Logger.swift in Sources */,
 				D9AEFB3E20EC47F4007A528E /* RoomCell.swift in Sources */,
 				D9AEFB2F20EA1CBA007A528E /* MainViewController.swift in Sources */,
+				D96E0CBC20EE2F240019BEC2 /* MiniPlayerViewController.swift in Sources */,
 				D9AEFB4A20EC7861007A528E /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

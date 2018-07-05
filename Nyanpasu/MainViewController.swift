@@ -17,15 +17,10 @@ extension MainViewController: StoryboardInitialInstance {
 class MainViewController: UIViewController {
   
   // MARK: Properties
-  var user: User! {
-    didSet {
-      userDisplayNameLabel.text = user.displayName ?? "Anonymous"
-      userLatestMessage.text = "今日はどんな感じ？ やっぱキャンプいい..."
-    }
-  }
+  var user: User!
   private var userHandle: AuthStateDidChangeListenerHandle?
-  
   private let rooms: [Room] = Room.all()
+  var miniPlayer: MiniPlayerViewController?
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
@@ -33,11 +28,7 @@ class MainViewController: UIViewController {
 
   // MARK: IBOutlets
   @IBOutlet weak var collectionView: UICollectionView!
-  @IBOutlet weak var userView: UIView!
-  @IBOutlet weak var userProfileImage: UIImageView!
-  @IBOutlet weak var userDisplayNameLabel: UILabel!
-  @IBOutlet weak var userLatestMessage: UILabel!
-  
+
   // MARK: UIViewController Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -46,8 +37,6 @@ class MainViewController: UIViewController {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.identifier)
-    
-    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(enterRoom(sender:))))
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -113,17 +102,12 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // if indexPath is first, navigate to room
     print("room \(indexPath.item) was tapped")
-  }
-}
-
-extension UIColor {
-  static var appBackgroundColor: UIColor {
-    return UIColor(red:0.07, green:0.09, blue:0.11, alpha:1.0)
-  }
-  
-  static var secondaryBackgroundColor: UIColor {
-    return UIColor(red:0.13, green:0.15, blue:0.17, alpha:1.0)
+    
+    let controller = RoomViewController.fromStoryboard()
+    controller.user = user
+    self.navigationController?.pushViewController(controller, animated: true)
   }
 }
 
@@ -144,3 +128,14 @@ extension MainViewController {
     }
   }
 }
+
+extension UIColor {
+  static var appBackgroundColor: UIColor {
+    return UIColor(red:0.07, green:0.09, blue:0.11, alpha:1.0)
+  }
+  
+  static var secondaryBackgroundColor: UIColor {
+    return UIColor(red:0.13, green:0.15, blue:0.17, alpha:1.0)
+  }
+}
+

@@ -14,6 +14,7 @@ class RoomCell: UICollectionViewCell {
   var room: Room? {
     didSet {
       print("room was set")
+      profileImageView.image = Room.randomImage()
       nameLabel.text = room?.name
       updatedLabel.text = room?.updated
     }
@@ -26,6 +27,16 @@ class RoomCell: UICollectionViewCell {
     view.layer.cornerRadius = 20
     view.layer.masksToBounds = true
     return view
+  }()
+  
+  let profileImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "kuchi")
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.layer.cornerRadius = 27
+    imageView.layer.masksToBounds = true
+    imageView.contentMode = .scaleAspectFill
+    return imageView
   }()
   
   let nameLabel: UILabel = {
@@ -44,21 +55,37 @@ class RoomCell: UICollectionViewCell {
     return label
   }()
   
-  lazy var stackView: UIStackView = {
+  lazy var labelStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.axis = UILayoutConstraintAxis.vertical
     stackView.distribution = UIStackViewDistribution.equalSpacing
-    stackView.alignment = UIStackViewAlignment.center
+    stackView.alignment = UIStackViewAlignment.leading
     stackView.spacing = 4.0
+    
     stackView.addArrangedSubview(self.nameLabel)
     stackView.addArrangedSubview(self.updatedLabel)
     return stackView
   }()
   
-  let profileImageView: UIImageView = {
-    let imageView = UIImageView()
-    return imageView
+  let playButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("", for: .normal)
+    button.setTitleColor(UIColor.white, for: .normal)
+    button.setImage(UIImage(named: "play")!, for: .normal)
+    button.tintColor = UIColor.white
+    return button
+  }()
+
+  lazy var horizontalStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.axis = UILayoutConstraintAxis.vertical
+    stackView.distribution = UIStackViewDistribution.equalSpacing
+    stackView.alignment = UIStackViewAlignment.leading
+    stackView.spacing = 4.0
+    return stackView
   }()
   
   override func prepareForReuse() {
@@ -70,25 +97,33 @@ class RoomCell: UICollectionViewCell {
     super.init(frame: frame)
     
     addSubview(bubbleView)
-    addSubview(stackView)
+    addSubview(profileImageView)
+    addSubview(labelStackView)
+    addSubview(playButton)
     
     let bubbleViewTop = bubbleView.topAnchor.constraint(equalTo: self.topAnchor)
     let bubbleViewLeft = bubbleView.leftAnchor.constraint(equalTo: self.leftAnchor)
     let bubbleViewright = bubbleView.rightAnchor.constraint(equalTo: self.rightAnchor)
     let bubbleViewBottom = bubbleView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-    NSLayoutConstraint.activate([
-      bubbleViewTop, bubbleViewLeft, bubbleViewright, bubbleViewBottom
-      ])
+    NSLayoutConstraint.activate([bubbleViewTop, bubbleViewLeft, bubbleViewright, bubbleViewBottom])
     
-    let stackViewCenterX = stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-    let stackViewCenterY = stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-    NSLayoutConstraint.activate([stackViewCenterX, stackViewCenterY])
+    let profileImageViewCenterY = profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+    let profileImageViewLeft = profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16)
+    let profileImageViewWidth = profileImageView.widthAnchor.constraint(equalToConstant: 54)
+    let profileImageViewHeight = profileImageView.heightAnchor.constraint(equalToConstant: 54)
+    NSLayoutConstraint.activate([profileImageViewCenterY, profileImageViewLeft, profileImageViewWidth, profileImageViewHeight])
+    
+    let labelStackViewLeft = labelStackView.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 16)
+    let labelStackViewRight = labelStackView.rightAnchor.constraint(equalTo: playButton.leftAnchor, constant: 16)
+    let labelStackViewCenterY = labelStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+    NSLayoutConstraint.activate([labelStackViewLeft, labelStackViewRight, labelStackViewCenterY])
+    
+    let playButtonRight = playButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16)
+    let playButtonCenterY = playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+    NSLayoutConstraint.activate([playButtonRight, playButtonCenterY])
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-//  func populate(room: Room) {
-//  }
 }

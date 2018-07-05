@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // for testing auth
     UserDefaults.standard.set(false, forKey: "LOGGED_IN")
+    UIApplication.shared.statusBarStyle = .lightContent
 
     return true
   }
