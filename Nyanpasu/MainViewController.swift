@@ -102,8 +102,7 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // if indexPath is first, navigate to room
-    print("room \(indexPath.item) was tapped")
+    miniPlayer?.configure(room: rooms[indexPath.item])
     
     let controller = RoomViewController.fromStoryboard()
     controller.user = user

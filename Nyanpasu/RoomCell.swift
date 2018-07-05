@@ -14,9 +14,11 @@ class RoomCell: UICollectionViewCell {
   var room: Room? {
     didSet {
       print("room was set")
-      profileImageView.image = Room.randomImage()
-      nameLabel.text = room?.name
-      updatedLabel.text = room?.updated
+      if let room = room {
+        profileImageView.image = UIImage(named: room.photo)!
+        nameLabel.text = room.name
+        updatedLabel.text = room.updated
+      }
     }
   }
   
@@ -24,7 +26,7 @@ class RoomCell: UICollectionViewCell {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.secondaryBackgroundColor
-    view.layer.cornerRadius = 20
+    view.layer.cornerRadius = 24
     view.layer.masksToBounds = true
     return view
   }()

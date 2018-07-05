@@ -27,6 +27,8 @@ class RoomViewController: UIViewController {
   private var mostRecentlyProcessedSegmentDuration: TimeInterval = 0
   fileprivate var player: AVPlayer?
   
+  private var initiatationFeedbackGenerator: UIImpactFeedbackGenerator? = nil
+  private var successFeedbackGenerator: UINotificationFeedbackGenerator? = nil
   private var isRecording = false
   private let animationDuration = 3.0
 
@@ -37,11 +39,7 @@ class RoomViewController: UIViewController {
       }
     }
   }
-  
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-  
+
   var messages: [Message] = [
     Message(text: "プロフェッショナルとは"),
     Message(text: "ケイスケホンダ"),
@@ -51,21 +49,12 @@ class RoomViewController: UIViewController {
   ]
   
   // MARK: IBOutlets
-  
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var recordButton: UIButton!
+  @IBOutlet weak var recordButtonHeight: NSLayoutConstraint!
+  @IBOutlet weak var recordButtonWidth: NSLayoutConstraint!
   @IBOutlet weak var transcriptOverlayView: UIView!
-  @IBOutlet weak var transcriptLabel: UILabel! {
-    didSet {
-      print("transcriptLabel didSet")
-      if let transcript = transcriptLabel.text {
-        print(transcript)
-      }
-      else {
-        print("...but transcript.text is empty")
-      }
-    }
-  }
+  @IBOutlet weak var transcriptLabel: UILabel!
   @IBOutlet weak var transcriptOverlayHeight: NSLayoutConstraint!
   
   override func viewDidLoad() {
@@ -73,71 +62,86 @@ class RoomViewController: UIViewController {
     
     self.setNeedsStatusBarAppearanceUpdate()
     self.title = user?.displayName ?? "Anonymous"
-//    navigationController?.navigationBar.barTintColor = UIColor.white
+    
     navigationController?.navigationBar.isTranslucent = false
     navigationController?.navigationBar.barStyle = .black
     navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white]
 
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCollectionViewTap(recognizer:))))
-    
+
+    recordButton.layer.shadowColor = UIColor.white.cgColor
+    recordButton.layer.shadowOffset = CGSize.zero
+    recordButton.layer.shadowOpacity = 0.4
     recordButton.isEnabled = false
+    
+    initiatationFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    initiatationFeedbackGenerator?.prepare()
+    
+    successFeedbackGenerator = UINotificationFeedbackGenerator()
+    successFeedbackGenerator?.prepare()
+
     setupUIForRecording()
     authorizeMicrophone()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    initiatationFeedbackGenerator = nil
+    successFeedbackGenerator = nil
+  }
+}
 
+// MARK: - IBActions
+extension RoomViewController {
+ 
   @IBAction func onTouchDown(_ sender: UIButton) {
     print("onTouchDown [start recording]")
-    // begin recording
-    // prompt: slide up to cancel
+    // - begin recording
+    // - prompt: slide up to cancel
     startRecording()
     updateUIForTranscriptionInProgress()
   }
   
   @IBAction func onTouchUpInside(_ sender: UIButton) {
     print("onTOuchUpInside [complete recording and send message]")
-    // complete recording
-    // send message
+    // - complete recording
+    // - send message
     stopRecording()
     saveMessage()
     updateUIForCompletedTranscription()
+    successFeedbackGenerator?.notificationOccurred(.success)
   }
   
   @IBAction func onTouchUpOutside(_ sender: UIButton) {
     print("onTouchUpOutside [cancel recording and trash message]")
-    // cancel recording
-    // trash message
+    // - cancel recording
+    // - trash message
     recordButton.isEnabled = false
     stopRecording()
+    updateUIForCompletedTranscription()
   }
   
   @IBAction func onTouchDragInside(_ sender: UIButton) {
     print("onTouchDragInside")
-    // do nothing if already same state
-    // prompt: slide up to cancel
+    // - do nothing if already same state
+    // - prompt: slide up to cancel
   }
   
   @IBAction func onTouchDragOutside(_ sender: UIButton) {
     print("onTouchDragOutside")
-    // do nothing if already same state
-    // prompt: let go to cancel
-  }
-  
-  @objc func handleCollectionViewTap(recognizer: UITapGestureRecognizer) {
-    if recognizer.state == .ended {
-      print("collectionView has been tapped")
-    }
+    // - do nothing if already same state
+    // - prompt: let go to cancel
   }
 }
 
 // MARK: - Messaging
 extension RoomViewController {
+  
   private func saveMessage() {
     if let transcription = transcriptLabel?.text {
-      print("Saving Message \(transcription)")
-      let message = Message(text: transcription)
-      messages.append(message)
+      messages.append(Message(text: transcription))
       collectionView.reloadData()
     }
   }
@@ -145,6 +149,7 @@ extension RoomViewController {
 
 // MARK: - Live Transcription
 extension RoomViewController {
+  
   fileprivate func startRecording() {
     print("startRecording()")
     do {
@@ -160,7 +165,8 @@ extension RoomViewController {
       
       audioEngine.prepare()
       try audioEngine.start()
-      
+      initiatationFeedbackGenerator?.impactOccurred()
+
       recognitionTask = speechRecognizer?.recognitionTask(with: request, resultHandler: { [unowned self] (result, error) in
         if let error = error {
           print(error.localizedDescription)
@@ -182,33 +188,38 @@ extension RoomViewController {
     request.endAudio()
     audioEngine.inputNode.removeTap(onBus: inputNodeBus)
     recognitionTask?.cancel()
-    recordButton?.isEnabled = true
   }
 }
 
 // MARK: - UI Management
 extension RoomViewController {
+  
   fileprivate func setupUIForRecording() {
     print("updateUIForRecording")
-    transcriptLabel?.text = ""
-    transcriptOverlayHeight?.constant = 0
-    transcriptOverlayView?.isHidden = true
-    transcriptLabel?.isHidden = true
-    updateUIForCompletedTranscription()
+    DispatchQueue.main.async { [unowned self] in
+      self.transcriptLabel.text = ""
+      self.recordButtonHeight?.constant = 48
+      self.recordButtonWidth?.constant = 160
+      self.transcriptOverlayHeight?.constant = 0
+      self.transcriptOverlayView?.isHidden = true
+      self.transcriptLabel?.isHidden = true
+      let item = self.collectionView(self.collectionView!, numberOfItemsInSection: 0) - 1
+      let lastItemIndex = IndexPath(item: item, section: 0)
+      self.collectionView?.scrollToItem(at: lastItemIndex, at: UICollectionViewScrollPosition.top, animated: true)
+      self.recordButton?.isEnabled = true
+    }
   }
   
   fileprivate func updateUIForTranscriptionInProgress() {
     DispatchQueue.main.async { [unowned self] in
       print("updateUIForTranscriptionInProgress (in main dispatch queue)")
+      self.recordButtonHeight?.constant = 48 * 1.2
+      self.recordButtonWidth?.constant = 160 * 1.2
       self.transcriptOverlayHeight?.constant = self.view.bounds.height
       self.transcriptOverlayView?.isHidden = false
       self.transcriptLabel?.isHidden = false
     }
   }
-  
-//  fileprivate func updateUIWithTranscription() {
-//    print("updateUIWithTranscription")
-//  }
   
   fileprivate func updateUIWithTranscription(_ transcription: SFTranscription) {
     print("updateUIWithTranscription(_:)")
@@ -230,16 +241,7 @@ extension RoomViewController {
   
   fileprivate func updateUIForCompletedTranscription() {
     print("updateUIForCompletedTranscription")
-    DispatchQueue.main.async { [unowned self] in
-      self.transcriptLabel.text = ""
-      self.transcriptOverlayHeight?.constant = 0
-      self.transcriptOverlayView?.isHidden = true
-      self.transcriptLabel?.isHidden = true
-      let item = self.collectionView(self.collectionView!, numberOfItemsInSection: 0) - 1
-      let lastItemIndex = IndexPath(item: item, section: 0)
-      self.collectionView?.scrollToItem(at: lastItemIndex, at: UICollectionViewScrollPosition.top, animated: true)
-      self.recordButton?.isEnabled = true
-    }
+    setupUIForRecording()
   }
   
   fileprivate func updateUIOnTouchDown() {
@@ -251,10 +253,11 @@ extension RoomViewController {
   }
 }
 
+// MARK: - Speech authorization
 extension RoomViewController {
+  
   func authorizeMicrophone() {
-//    let authorizationStatus = SFSpeechRecognizer.authorizationStatus()
-    SFSpeechRecognizer.requestAuthorization { [unowned self] (authStatus) in
+    SFSpeechRecognizer.requestAuthorization { (authStatus) in
       switch authStatus {
       case .authorized:
         print("Microphone Authorized")
@@ -269,6 +272,7 @@ extension RoomViewController {
   }
 }
 
+// MARK: - UICollectionViewDataSource
 extension RoomViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return messages.count
@@ -281,6 +285,7 @@ extension RoomViewController: UICollectionViewDataSource {
   }
 }
 
+// MARK: - UICollectionViewDelegate
 extension RoomViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let message = messages[indexPath.item]
@@ -289,12 +294,12 @@ extension RoomViewController: UICollectionViewDelegate {
 }
 
 extension RoomViewController: UICollectionViewDelegateFlowLayout {
+  // - get intrinsic size from transcript text
 }
 
+// MARK: - Message cell
 class MessageCell: UICollectionViewCell {
-  
   @IBOutlet weak var textLabel: UILabel!
-  
   func populate(message: Message) {
     textLabel.text = message.text
   }

@@ -19,17 +19,20 @@ struct Room {
   
   let name: String
   let updated: String
-  var isUpdated: Bool
+  let photo: String
   
   static func all() -> [Room] {
     return [
-      Room(name: "fuku", updated: "ユウスケフクヤマ どういう意味...", isUpdated: false),
-      Room(name: "アリス", updated: "今日はどんな感じ？やっぱキャンプ...", isUpdated: false),
-      Room(name: "カフカ", updated: "Updated Feb 12, 2018", isUpdated: false),
-      Room(name: "スティーブ", updated: "Updated Jan 1, 2018", isUpdated: false),
-      Room(name: "れんちょん", updated: "Updated Dec 21, 2017", isUpdated: false),
-      Room(name: "うっくん", updated: "Updated Dec 21, 2017", isUpdated: false),
-      Room(name: "百合子", updated: "Updated Dec 21, 2017", isUpdated: false),
+      Room(name: "fuku", updated: "ユウスケフクヤマ どういう意味...", photo: "profileImage1"),
+      Room(name: "アリス", updated: "今日はどんな感じ？やっぱキャンプ...", photo: "profileImage2"),
+      Room(name: "カフカ", updated: "Updated Feb 12, 2018", photo: "profileImage3"),
+      Room(name: "スティーブ", updated: "Updated Jan 1, 2018", photo: "profileImage4"),
+      Room(name: "れんちょん", updated: "Updated Dec 21, 2017", photo: "profileImage5"),
+      Room(name: "うっくん", updated: "Updated Dec 21, 2017", photo: "profileImage6"),
+      Room(name: "百合子", updated: "Updated Dec 21, 2017", photo: "profileImage7"),
+      Room(name: "れんちょん", updated: "Updated Dec 21, 2017", photo: "profileImage1"),
+      Room(name: "うっくん", updated: "Updated Dec 21, 2017", photo: "profileImage2"),
+      Room(name: "百合子", updated: "Updated Dec 21, 2017", photo: "profileImage3"),
     ]
   }
   
