@@ -43,7 +43,7 @@ class AuthViewController: UIViewController {
         // DO NOT use this value to authenticate with your backend server
         // if you have one. Use getTokenWithCompletion:completion: instead.
         let name = user.displayName ?? "no displayName"
-        print("[user \(user.uid)] \(name)")
+        print("[Auth] addStateDidChangeListener for user \(user.uid)] \(name)")
 
         // navigate to Main
         // AppDelegate.shared.rootViewController.toMainScreen()

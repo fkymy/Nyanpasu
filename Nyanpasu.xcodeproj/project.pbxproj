@@ -32,6 +32,7 @@
 		D9AEFB4A20EC7861007A528E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4920EC7861007A528E /* Models.swift */; };
 		D9AEFB4E20ED0232007A528E /* AVKeynote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4D20ED0232007A528E /* AVKeynote.swift */; };
 		D9AEFB5020ED37D7007A528E /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */; };
+		D9D36D0B20EF9811005227D5 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D36D0A20EF9810005227D5 /* test.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		D9AEFB4920EC7861007A528E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		D9AEFB4D20ED0232007A528E /* AVKeynote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVKeynote.swift; sourceTree = "<group>"; };
 		D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
+		D9D36D0A20EF9810005227D5 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,12 +178,12 @@
 				D9AEFB2C20EA1CAB007A528E /* AuthViewController.swift */,
 				D9AEFB3220EA2C53007A528E /* Auth.storyboard */,
 				D9AEFB2E20EA1CBA007A528E /* MainViewController.swift */,
+				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
 				D96E0CBB20EE2F240019BEC2 /* MiniPlayerViewController.swift */,
 				D9AEFB4F20ED37D7007A528E /* RoomViewController.swift */,
 				D9AEFB4520EC51C6007A528E /* StudioViewController.swift */,
 				D9AEFB3F20EC4870007A528E /* RoomsFlowLayout.swift */,
 				D9AEFB3D20EC47F4007A528E /* RoomCell.swift */,
-				D942AEC520E8FBE5009CCA5D /* Main.storyboard */,
 				D9AEFB4920EC7861007A528E /* Models.swift */,
 				D9AEFB3520EA334F007A528E /* StoryboardInstance.swift */,
 				D9AEFAF820E9F741007A528E /* Logger.swift */,
@@ -191,6 +193,7 @@
 				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
 				D9AEFAFB20E9F9C4007A528E /* README.md */,
 				D9519DCC20EE7DDD002936B8 /* moe.m4a */,
+				D9D36D0A20EF9810005227D5 /* test.png */,
 				D9AEFB4D20ED0232007A528E /* AVKeynote.swift */,
 			);
 			path = Nyanpasu;
@@ -327,6 +330,7 @@
 				D9AEFB3320EA2C53007A528E /* Auth.storyboard in Resources */,
 				D942AEC720E8FBE5009CCA5D /* Main.storyboard in Resources */,
 				D9AEFB2920EA06CA007A528E /* Assets.xcassets in Resources */,
+				D9D36D0B20EF9811005227D5 /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

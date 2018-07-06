@@ -221,14 +221,29 @@ extension RoomViewController {
       
 //      messages.append(message)
 //      collectionView.reloadData()
-  Firestore.firestore().collection("rooms").document(room.name).collection("messages").addDocument(data: message.dictionary)
+      Firestore.firestore().collection("rooms").document(room.name).collection("messages").addDocument(data: message.dictionary)
     }
   }
 }
 
-// MARK: - Live Transcription
+// MARK: - Speech
 extension RoomViewController {
   
+  fileprivate func authorizeMicrophone() {
+    SFSpeechRecognizer.requestAuthorization { (authStatus) in
+      switch authStatus {
+      case .authorized:
+        print("Microphone Authorized")
+      case .denied:
+        print("Microphone Denied")
+      case .restricted:
+        print("Microphone not available")
+      case .notDetermined:
+        print("Microphone Not Determined")
+      }
+    }
+  }
+
   fileprivate func startRecording() {
     print("startRecording()")
     do {
@@ -329,25 +344,6 @@ extension RoomViewController {
   
   fileprivate func updateUIOnDragOutside() {
     print("放すと取り消し")
-  }
-}
-
-// MARK: - Speech authorization
-extension RoomViewController {
-  
-  func authorizeMicrophone() {
-    SFSpeechRecognizer.requestAuthorization { (authStatus) in
-      switch authStatus {
-      case .authorized:
-        print("Microphone Authorized")
-      case .denied:
-        print("Microphone Denied")
-      case .restricted:
-        print("Microphone not available")
-      case .notDetermined:
-        print("Microphone Not Determined")
-      }
-    }
   }
 }
 
