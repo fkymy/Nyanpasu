@@ -39,14 +39,72 @@ class RoomViewController: UIViewController {
       }
     }
   }
+  
+  var room: Room! {
+    didSet {
+      if let room = room {
+        print("room has been set to \(room.name)")
+      }
+    }
+  }
 
-  var messages: [Message] = [
-    Message(text: "プロフェッショナルとは"),
-    Message(text: "ケイスケホンダ"),
-    Message(text: "どういうことか"),
-    Message(text: "プロフェッショナルを今後ケイスケホンダにしてしまいます"),
-    Message(text: "お前ケイスケホンダやな、みたいな"),
-  ]
+//  var messages: [Message] = [
+//    Message(text: "プロフェッショナルとは"),
+//    Message(text: "ケイスケホンダ"),
+//    Message(text: "どういうことか"),
+//    Message(text: "プロフェッショナルを今後ケイスケホンダにしてしまいます"),
+//    Message(text: "お前ケイスケホンダやな、みたいな"),
+//  ]
+  
+  private var messages: [Message] = []
+  private var documents: [DocumentSnapshot] = []
+  
+  private var listener: ListenerRegistration?
+  
+  fileprivate var query: Query? {
+    didSet {
+      if let listener = listener {
+        listener.remove()
+        observeQuery()
+      }
+    }
+  }
+  
+  fileprivate func baseQuery() -> Query {
+    let db = Firestore.firestore()
+    let ref = db.collection("rooms").document(room.name).collection("messages")
+    return ref.order(by: "date", descending: false).limit(to: 30)
+  }
+  
+  fileprivate func observeQuery() {
+    guard let query = query else { return }
+    stopObserving()
+    
+    listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
+      guard let snapshot = snapshot else {
+        print("Error fetching snapshot in room:")
+        return
+      }
+      
+      let models = snapshot.documents.map { (document) -> Message in
+        if let model = Message(dictionary: document.data()) {
+          return model
+        }
+        else {
+          fatalError("Unable to initialize Message with dictionary \(document.data())")
+        }
+      }
+      self.messages = models
+      self.documents = snapshot.documents
+      
+      self.collectionView.reloadData()
+      self.setupUIForRecording()
+    }
+  }
+  
+  fileprivate func stopObserving() {
+    listener?.remove()
+  }
   
   // MARK: IBOutlets
   @IBOutlet weak var collectionView: UICollectionView!
@@ -81,7 +139,13 @@ class RoomViewController: UIViewController {
     successFeedbackGenerator = UINotificationFeedbackGenerator()
     successFeedbackGenerator?.prepare()
 
-    setupUIForRecording()
+    query = baseQuery()
+    observeQuery()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+   
     authorizeMicrophone()
   }
   
@@ -90,6 +154,12 @@ class RoomViewController: UIViewController {
     
     initiatationFeedbackGenerator = nil
     successFeedbackGenerator = nil
+    stopObserving()
+  }
+  
+  deinit {
+    stopRecording()
+    listener?.remove()
   }
 }
 
@@ -141,8 +211,17 @@ extension RoomViewController {
   
   private func saveMessage() {
     if let transcription = transcriptLabel?.text {
-      messages.append(Message(text: transcription))
-      collectionView.reloadData()
+      
+      let message = Message(
+        senderID: user.uid,
+        audio: URL(fileURLWithPath: "moe.m4a"),
+        text: transcription,
+        date: Date()
+      )
+      
+//      messages.append(message)
+//      collectionView.reloadData()
+  Firestore.firestore().collection("rooms").document(room.name).collection("messages").addDocument(data: message.dictionary)
     }
   }
 }

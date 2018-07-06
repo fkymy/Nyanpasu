@@ -94,8 +94,15 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <connections>
+                                <action selector="logout:" destination="FeI-Lq-G3g" id="9hd-o0-qgP"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cwC-Nh-c4d"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cwC-Nh-c4d">
+                            <connections>
+                                <action selector="didTapPopulationButton:" destination="FeI-Lq-G3g" id="Mtl-Dc-h2L"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="5Fk-Ec-8Ex" id="uEY-XG-0oA"/>

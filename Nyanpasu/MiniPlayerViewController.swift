@@ -21,12 +21,13 @@ class MiniPlayerViewController: UIViewController {
   func configure(room: Room?) {
     if let room = room {
       name.text = room.name
-      thumbImage.image = Room.randomImage()
+      thumbImage.image = UIImage(named: room.photo)
     }
     else {
       name.text = "れんちょん"
       thumbImage.image = UIImage(named: "kuchi")
     }
+    
     currentRoom = room
   }
   

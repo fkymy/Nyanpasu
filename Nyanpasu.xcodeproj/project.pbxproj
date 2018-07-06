@@ -73,6 +73,7 @@
 		D942AEE120E8FBE6009CCA5D /* NyanpasuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NyanpasuUITests.swift; sourceTree = "<group>"; };
 		D942AEE320E8FBE6009CCA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9519DCC20EE7DDD002936B8 /* moe.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = moe.m4a; sourceTree = "<group>"; };
 		D96E0CBB20EE2F240019BEC2 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		D96E0CBD20EE324A0019BEC2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		D9AEFAF820E9F741007A528E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 				D942AECD20E8FBE5009CCA5D /* Info.plist */,
 				D942AEF120E9C7A9009CCA5D /* GoogleService-Info.plist */,
 				D9AEFAFB20E9F9C4007A528E /* README.md */,
+				D9519DCC20EE7DDD002936B8 /* moe.m4a */,
 				D9AEFB4D20ED0232007A528E /* AVKeynote.swift */,
 			);
 			path = Nyanpasu;

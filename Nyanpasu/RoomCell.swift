@@ -13,7 +13,6 @@ class RoomCell: UICollectionViewCell {
   
   var room: Room? {
     didSet {
-      print("room was set")
       if let room = room {
         profileImageView.image = UIImage(named: room.photo)!
         nameLabel.text = room.name

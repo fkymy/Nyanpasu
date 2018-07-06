@@ -22,9 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
     
     FirebaseApp.configure()
-    
-    let db = Firestore.firestore()
-    
+
     // for testing auth
     UserDefaults.standard.set(false, forKey: "LOGGED_IN")
     UIApplication.shared.statusBarStyle = .lightContent
