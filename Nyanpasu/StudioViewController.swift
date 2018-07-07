@@ -15,21 +15,45 @@ extension StudioViewController: StoryboardInstance {
   static var storyboardName: String { return "Main" }
 }
 
-class StudioViewController: UIViewController {
+enum AudioStatus: Int, CustomStringConvertible {
+  case stopped = 0,
+  playing,
+  recording
+  
+  var statusString: String {
+    let status = [
+      "Audio: Stopped",
+      "Audio: Playing",
+      "Audio: Recording"
+    ]
+    return status[rawValue]
+  }
+  
+  var description: String {
+    return statusString
+  }
+}
+
+class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
   
   // MARK: Properties
   let storage = Storage.storage(url: "gs://nyanpasu-7767d.appspot.com")
+  var listener: ListenerRegistration?
   var audios: [String] = []
+  var documents: [DocumentSnapshot] = []
 
-  // Audio
   let session = AVAudioSession.sharedInstance()
   var audioEngine: AVAudioEngine!
-  var audioFile : AVAudioFile!
-  var audioPlayer : AVAudioPlayerNode!
-  var outref: ExtAudioFileRef?
-  var audioFilePlayer: AVAudioPlayerNode!
   var mixer: AVAudioMixerNode!
+  var audioFile: AVAudioFile!
+  var audioFilePlayer: AVAudioPlayerNode!
+  var outref: ExtAudioFileRef?
   var filePath: String? = nil
+  
+  var audioStatus = AudioStatus.stopped
+  var audioRecorder: AVAudioRecorder!
+  var audioPlayer: AVAudioPlayer!
+  
   var isPlaying = false
   var isRecording = false
   
@@ -52,14 +76,67 @@ class StudioViewController: UIViewController {
   @IBOutlet weak var recordButtonHeight: NSLayoutConstraint!
   @IBOutlet weak var recordButtonWidth: NSLayoutConstraint!
 
+  private func setupAudioEngine() {
+    audioEngine = AVAudioEngine()
+    audioFilePlayer = AVAudioPlayerNode()
+    mixer = AVAudioMixerNode()
+  }
   
+  private func setupRecorder() {
+    let fileUrl = getUrlForAudio()
+    let recordSettings: [String: Any] = [
+      AVFormatIDKey: Int(kAudioFormatLinearPCM),
+      AVSampleRateKey: 44100.0,
+      AVNumberOfChannelsKey: 1, // mono recording
+      AVEncoderAudioQualityKey: AVAudioQuality.low.rawValue
+    ]
+    
+    do {
+      audioRecorder = try AVAudioRecorder(url: fileUrl, settings: recordSettings)
+      audioRecorder.delegate = self
+      audioRecorder.prepareToRecord()
+    }
+    catch {
+      fatalError("Error setting up recorder") // rm
+    }
+  }
+  
+  fileprivate func observe() {
+    let db = Firestore.firestore()
+    let ref = db.collection("studio")
+    stopObserving()
+    
+    listener = ref.addSnapshotListener{ [unowned self] (snapshot, error) in
+      guard let snapshot = snapshot else {
+        print("Error fetching snapshot in room")
+        return
+      }
+      
+      self.audios = snapshot.documents.map { (document) -> String in
+        let dict = document.data()
+        if let name = dict["name"] as? String {
+          return name
+        }
+        else {
+          fatalError("Unable to init document \(document.data())")
+        }
+      }
+      self.documents = snapshot.documents
+      self.tableView.reloadData()
+    }
+  }
+  
+  fileprivate func stopObserving() {
+    listener?.remove()
+  }
+
   // MARK: UIViewController Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    audioEngine = AVAudioEngine()
-    audioFilePlayer = AVAudioPlayerNode()
-    mixer = AVAudioMixerNode()
+    setupUI()
+    setupRecorder()
+    setupAudioEngine()
     
     tableView.delegate = self
     tableView.dataSource = self
@@ -68,7 +145,8 @@ class StudioViewController: UIViewController {
     navigationController?.navigationBar.barStyle = .black
     navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white]
     
-    setupUI()
+    observe()
+    
     // brutallyTestStorage()
 
     // AVAudioRecorder Example
@@ -90,30 +168,64 @@ class StudioViewController: UIViewController {
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     deactivateAudio()
+    stopObserving()
   }
   
   deinit {
     deactivateAudio()
+    stopObserving()
   }
-  
-  
+
   @IBAction func onTouchDown(_ sender: UIButton) {
     print("onTouchDown [start recording]")
-    startRecording()
-    updateUIForStartRecording()
+//    startRecording()
+    if audioStatus != .playing {
+      switch audioStatus {
+      case .stopped:
+        simpleRecord()
+        updateUIForStartRecording()
+      case .recording:
+        stopSimpleRecord()
+        updateUIForStopRecording()
+      default:
+        break
+      }
+    }
   }
   
   @IBAction func onTouchUpInside(_ sender: UIButton) {
     print("onTOuchUpInside [complete recording and send message]")
-    stopRecording()
-    saveRecording()
-    updateUIForStopRecording()
+//    stopRecording()
+    switch audioStatus {
+    case .recording:
+      stopSimpleRecord()
+      saveRecording()
+      updateUIForStopRecording()
+    default:
+      break
+    }
   }
   
   @IBAction func onTouchUpOutside(_ sender: UIButton) {
     print("onTouchUpOutside [cancel recording and trash message]")
-    stopRecording()
-    updateUIForStopRecording()
+//    stopRecording()
+    switch audioStatus {
+    case .recording:
+      stopSimpleRecord()
+      updateUIForStopRecording()
+    default:
+      break
+    }
+  }
+  
+  private func simpleRecord() {
+    audioRecorder.record()
+    audioStatus = .recording
+  }
+  
+  private func stopSimpleRecord() {
+    audioRecorder.stop()
+    audioStatus = .stopped
   }
   
   private func startRecording() {
@@ -156,17 +268,71 @@ class StudioViewController: UIViewController {
     deactivateAudio()
   }
   
+  private func playAudio(for index: Int) {
+    print("playAudio for \(index)")
+//    activateAudio()
+//    isPlaying = true
+//    let fileUrl = getUrlForAudio()
+//    do {
+//      audioPlayer = try AVAudioPlayer(contentsOf: fileUrl)
+//      audioPlayer.delegate = self
+//      if audioPlayer.duration > 0.0 {
+//        audioPlayer.volume = 0.5
+//        audioPlayer.prepareToPlay()
+//      }
+//    }
+//    catch {
+//      isPlaying = false
+//      print("failed to init audio player")
+//    }
+//    if isPlaying == true {
+//      audioPlayer.play()
+//      audioStatus = .playing
+//    }
+    
+    let audioName = audios[index]
+    let audioRef = storage.reference().child("studio").child(audioName)
+    audioRef.getData(maxSize: 1*1024*1024) { [weak self] (data, error) in
+      guard let strongSelf = self else { return }
+      guard let data = data else {
+        print("no data from ref: \(audioRef.description)")
+        return
+      }
+      print("getData returned data: \(data.description)")
+      strongSelf.isPlaying = true
+      strongSelf.activateAudio()
+
+      // load for metering...
+      do {
+        strongSelf.audioPlayer = try AVAudioPlayer(data: data)
+        strongSelf.audioPlayer.delegate = self
+        if strongSelf.isPlaying == true { // see why, for flagging?/?
+          print("play() is called, for audioPlayer \(strongSelf.audioPlayer.description)")
+          strongSelf.audioPlayer.play()
+          strongSelf.audioStatus = .playing
+        }
+      }
+      catch {
+        print("audioPlayer failed, from data \(data.description)")
+        strongSelf.audioPlayer = nil
+        strongSelf.isPlaying = false
+      }
+    }
+  }
+  
+  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    print("audioPlayerDidFinishPlaying!")
+    isPlaying = false
+    audioPlayer.stop()
+    deactivateAudio()
+  }
+  
   private func saveRecording() {
     let storageRef = storage.reference()
     let studioRef = storageRef.child("studio")
     let filename = "NYANPASU_\(Date().timeIntervalSince1970).caf"
-
-    guard let filePath = filePath else {
-      print("no filePath")
-      return
-    }
+    let url = getUrlForAudio()
     
-    let url = URL(fileURLWithPath: filePath)
     let data = try? Data(contentsOf: url)
     if let data = data {
       let uploadTask = studioRef.child(filename).putData(data, metadata: nil) { [weak self] (metadata, error) in
@@ -175,7 +341,8 @@ class StudioViewController: UIViewController {
           return
         }
         print(metadata.description)
-        self?.audios.append(metadata.name!)
+        // self?.audios.append(metadata.name!)
+        Firestore.firestore().collection("studio").document(metadata.name!).setData(["name": filename])
         DispatchQueue.main.async {
           self?.tableView.reloadData()
         }
@@ -205,8 +372,8 @@ class StudioViewController: UIViewController {
   
   func activateAudio() {
     do {
-      // 1) configure audio session category, options, and mode
-      // 2) activate your audio session to enable your custom configuration
+      // - configure audio session category, options, and mode
+      // - activate your audio session to enable your custom configuration
       try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
       try session.setActive(true)
     }
@@ -244,10 +411,21 @@ extension StudioViewController: UITableViewDataSource {
 extension StudioViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("tableView \(indexPath.row) did select.")
+    playAudio(for: indexPath.row)
   }
 }
 
-// MARK: - Storage
+// MARK: - Utilities
+extension StudioViewController {
+  func getUrlForAudio() -> URL {
+    let dir = NSTemporaryDirectory()
+    filePath =  dir + "/tmp_studio.caf"
+    
+    return URL(fileURLWithPath: filePath!)
+  }
+}
+
+// MARK: - Brutally Test Storage
 extension StudioViewController {
   func brutallyTestStorage() {
     let storageRef = storage.reference()
@@ -255,7 +433,7 @@ extension StudioViewController {
     let audioRef = storageRef.child("audio")
     let testAudioRef = audioRef.child(filename)
     
-    storage.reference().child("moe.m4a").getData(maxSize: 1*1024*1024) { (data, error) in
+    storageRef.child("moe.m4a").getData(maxSize: 1*1024*1024) { (data, error) in
       if let data = data {
         let uploadTask = testAudioRef.putData(data, metadata: nil) { (metadata, error) in
           guard let metadata = metadata else {
