@@ -148,7 +148,7 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
     observe()
     
     // brutallyTestStorage()
-
+    
     // AVAudioRecorder Example
     // setup AVAudioSession(PlayAndRecord); user permission; input selection
 
@@ -178,18 +178,18 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
 
   @IBAction func onTouchDown(_ sender: UIButton) {
     print("onTouchDown [start recording]")
-//    startRecording()
-    if audioStatus != .playing {
-      switch audioStatus {
-      case .stopped:
-        simpleRecord()
-        updateUIForStartRecording()
-      case .recording:
-        stopSimpleRecord()
-        updateUIForStopRecording()
-      default:
-        break
-      }
+    switch audioStatus {
+    case .stopped:
+      simpleRecord()
+      updateUIForStartRecording()
+    case .playing:
+      // - do a stop and record
+      // see why audidDidFinishPlaying is not being called on consecutive taps
+      stopPlayback()
+      simpleRecord()
+      updateUIForStartRecording()
+    default:
+      return
     }
   }
   
@@ -202,7 +202,7 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
       saveRecording()
       updateUIForStopRecording()
     default:
-      break
+      return
     }
   }
   
@@ -214,7 +214,7 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
       stopSimpleRecord()
       updateUIForStopRecording()
     default:
-      break
+      return
     }
   }
   
@@ -299,9 +299,9 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
         return
       }
       print("getData returned data: \(data.description)")
-      strongSelf.isPlaying = true
       strongSelf.activateAudio()
-
+      strongSelf.isPlaying = true
+      
       // load for metering...
       do {
         strongSelf.audioPlayer = try AVAudioPlayer(data: data)
@@ -316,17 +316,16 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
         print("audioPlayer failed, from data \(data.description)")
         strongSelf.audioPlayer = nil
         strongSelf.isPlaying = false
+        strongSelf.audioStatus = .stopped
       }
     }
   }
   
-  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-    print("audioPlayerDidFinishPlaying!")
-    isPlaying = false
+  private func stopPlayback() {
     audioPlayer.stop()
-    deactivateAudio()
+    audioStatus = .stopped
   }
-  
+
   private func saveRecording() {
     let storageRef = storage.reference()
     let studioRef = storageRef.child("studio")
@@ -354,6 +353,24 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
     }
   }
   
+  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    print("audioPlayerDidFinishPlaying!")
+    isPlaying = false
+//    audioPlayer.stop()
+    deactivateAudio()
+  }
+  
+  func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    print("audioRecorderDidFinishRecording")
+    audioStatus = .stopped
+  }
+  
+  private func setupUI() {
+    recordButtonWidth?.constant = 160
+    recordButtonHeight?.constant = 48
+    recordButton?.isEnabled = true
+  }
+
   private func updateUIForStartRecording() {
     recordButtonWidth?.constant = 160 * 1.3
     recordButtonHeight?.constant = 48 * 1.3
@@ -364,17 +381,12 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
     recordButtonHeight?.constant = 48
   }
   
-  private func setupUI() {
-    recordButtonWidth?.constant = 160
-    recordButtonHeight?.constant = 48
-    recordButton?.isEnabled = true
-  }
-  
   func activateAudio() {
     do {
       // - configure audio session category, options, and mode
       // - activate your audio session to enable your custom configuration
-      try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+      // ! for now, default input and output only
+      try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.defaultToSpeaker)
       try session.setActive(true)
     }
     catch let error {
@@ -411,7 +423,20 @@ extension StudioViewController: UITableViewDataSource {
 extension StudioViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print("tableView \(indexPath.row) did select.")
-    playAudio(for: indexPath.row)
+    
+    switch audioStatus {
+    case .stopped:
+      print("audioStatus is .stopped playing audio")
+      playAudio(for: indexPath.row)
+    case .playing:
+      print("audioStatus is .playing playing audio")
+      stopPlayback()
+      playAudio(for: indexPath.row)
+    case .recording:
+      print("cannot play when recording..?")
+    default:
+      return
+    }
   }
 }
 
