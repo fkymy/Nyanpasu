@@ -97,6 +97,7 @@ extension Room: DocumentSerializable {
 
 struct Message {
   
+  var id: String
   var senderID: String
   var audio: URL
   var text: String
@@ -123,11 +124,18 @@ struct Message {
 extension Message: DocumentSerializable {
   
   init?(dictionary: [String: Any]) {
-    guard let senderID = dictionary["senderId"] as? String,
+    guard let id = dictionary["id"] as? String,
+      let senderID = dictionary["senderId"] as? String,
       let text = dictionary["text"] as? String,
       let date = dictionary["date"] as? Date,
       let audio = (dictionary["audio"] as? String).flatMap(URL.init(string:)) else { return nil}
     
-    self.init(senderID: senderID, audio: audio, text: text, date: date)
+    self.init(id: id, senderID: senderID, audio: audio, text: text, date: date)
+  }
+}
+
+extension Message: CustomStringConvertible {
+  var description: String {
+    return "Message \(id) <senderID: \(senderID), audio: \(audio.absoluteString), text: \(text), data: \(date)>"
   }
 }

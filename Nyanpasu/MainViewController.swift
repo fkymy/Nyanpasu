@@ -184,8 +184,9 @@ extension MainViewController {
       let texts = Message.texts
       for i in 0..<texts.count {
         let message = Message(
+          id: NSUUID().uuidString,
           senderID: user.uid,
-          audio: URL(fileURLWithPath: "moe.m4a"),
+          audio: URL(string: "moe.m4a")!,
           text: texts[i],
           date: Date()
         )
@@ -204,9 +205,14 @@ extension MainViewController {
     // handle logout...
     // clear user session (example only, not for production)
     UserDefaults.standard.set(false, forKey: "LOGGED_IN")
-    
+
     // navigate to Auth
     AppDelegate.shared.rootViewController.toLogoutScreen()
+  }
+  
+  @IBAction func didTapBeerButton(_ sender: UIBarButtonItem) {
+    let controller = StudioViewController.fromStoryboard()
+    navigationController?.pushViewController(controller, animated: true)
   }
 }
 
@@ -242,7 +248,7 @@ extension MainViewController: UICollectionViewDelegate {
   }
 }
 
-// MARK: - Speech
+// MARK: - Speech authorization
 extension MainViewController {
   
   func authorizeSpeech() {
@@ -259,6 +265,11 @@ extension MainViewController {
       }
     }
   }
+}
+
+// MARK: - Studio
+extension MainViewController {
+
 }
 
 extension UIColor {

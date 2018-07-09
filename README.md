@@ -1,3 +1,3 @@
-barely functional poc for atmessenger
+brutal pow for atmessenger
 
 ![Screenshot](nyanpasu.png)
