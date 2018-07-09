@@ -184,8 +184,9 @@ extension MainViewController {
       let texts = Message.texts
       for i in 0..<texts.count {
         let message = Message(
+          id: NSUUID().uuidString,
           senderID: user.uid,
-          audio: URL(fileURLWithPath: "moe.m4a"),
+          audio: URL(string: "moe.m4a")!,
           text: texts[i],
           date: Date()
         )

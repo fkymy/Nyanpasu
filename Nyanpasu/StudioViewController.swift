@@ -8,33 +8,32 @@
 
 import UIKit
 import AVFoundation
-import AudioToolbox
 import Firebase
 
 extension StudioViewController: StoryboardInstance {
   static var storyboardName: String { return "Main" }
 }
 
-enum AudioStatus: Int, CustomStringConvertible {
-  case stopped = 0,
-  playing,
-  recording
-  
-  var statusString: String {
-    let status = [
-      "Audio: Stopped",
-      "Audio: Playing",
-      "Audio: Recording"
-    ]
-    return status[rawValue]
-  }
-  
-  var description: String {
-    return statusString
-  }
-}
-
 class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
+  
+  enum AudioStatus: Int, CustomStringConvertible {
+    case stopped = 0,
+    playing,
+    recording
+    
+    var statusString: String {
+      let status = [
+        "Audio: Stopped",
+        "Audio: Playing",
+        "Audio: Recording"
+      ]
+      return status[rawValue]
+    }
+    
+    var description: String {
+      return statusString
+    }
+  }
   
   // MARK: Properties
   let storage = Storage.storage(url: "gs://nyanpasu-7767d.appspot.com")
@@ -169,6 +168,7 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
     super.viewWillDisappear(animated)
     deactivateAudio()
     stopObserving()
+    
   }
   
   deinit {
@@ -228,36 +228,36 @@ class StudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioReco
     audioStatus = .stopped
   }
   
-  private func startRecording() {
-    filePath = nil
-    isRecording = true
-    activateAudio()
-    
-//    audioFile = try! AVAudioFile(forReading: Bundle.main.url(forResource: "moe", withExtension: "m4a")!)
-    
-    let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatInt16, sampleRate: 44100.0, channels: 1, interleaved: true)
-    
-    audioEngine.attach(mixer)
-    audioEngine.connect(audioEngine.inputNode, to: mixer, format: format)
-    audioEngine.connect(mixer, to: audioEngine.mainMixerNode, format: format)
-    
-    let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
-    filePath =  dir.appending("/studio.caf")
-
-    _ = ExtAudioFileCreateWithURL(URL(fileURLWithPath: filePath!) as CFURL, kAudioFileCAFType, (format?.streamDescription)!, nil, AudioFileFlags.eraseFile.rawValue, &outref)
-    
-    mixer.installTap(onBus: 0, bufferSize: AVAudioFrameCount((format?.sampleRate)! * 0.4), format: format) { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
-      let audioBuffer = buffer as AVAudioBuffer
-      _ = ExtAudioFileWrite(self.outref!, buffer.frameLength, audioBuffer.audioBufferList)
-    }
-    
-    do {
-      try audioEngine.start()
-    }
-    catch {
-      print("fuck...")
-    }
-  }
+//  private func startRecording() {
+//    filePath = nil
+//    isRecording = true
+//    activateAudio()
+//
+////    audioFile = try! AVAudioFile(forReading: Bundle.main.url(forResource: "moe", withExtension: "m4a")!)
+//
+//    let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatInt16, sampleRate: 44100.0, channels: 1, interleaved: true)
+//
+//    audioEngine.attach(mixer)
+//    audioEngine.connect(audioEngine.inputNode, to: mixer, format: format)
+//    audioEngine.connect(mixer, to: audioEngine.mainMixerNode, format: format)
+//
+//    let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
+//    filePath =  dir.appending("/studio.caf")
+//
+//    _ = ExtAudioFileCreateWithURL(URL(fileURLWithPath: filePath!) as CFURL, kAudioFileCAFType, (format?.streamDescription)!, nil, AudioFileFlags.eraseFile.rawValue, &outref)
+//
+//    mixer.installTap(onBus: 0, bufferSize: AVAudioFrameCount((format?.sampleRate)! * 0.4), format: format) { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
+//      let audioBuffer = buffer as AVAudioBuffer
+//      _ = ExtAudioFileWrite(self.outref!, buffer.frameLength, audioBuffer.audioBufferList)
+//    }
+//
+//    do {
+//      try audioEngine.start()
+//    }
+//    catch {
+//      print("fuck...")
+//    }
+//  }
   
   private func stopRecording() {
     print("stopRecording()")
